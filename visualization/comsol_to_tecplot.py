@@ -2,6 +2,29 @@
 """
 Convert COMSOL dl.u and dl.v model output to TecPlot360-compatible format
 Kyungdoe "Doe" Han (khan99@wisc.edu)
+
+In MATLAB, use the following snippet to extract flux at each timestep for integration with the current Python code.
+### MATLAB CODE ###
+timeList = model.study('std1').feature('time').getDoubleArray("tlist");
+extractLength = 8832; % 368 days
+extractStart = timeListLength-extractLength;
+for timeIdx = extractStart:timeListLength
+    model.result.export("dlv_ext").setIndex("expr", "dl.v", 0);
+    model.result.export("dlv_ext").setIndex("looplevelinput", "manual", 0);
+    model.result.export("dlv_ext").setIndex("looplevel", timeIdx, 0);
+    model.result.export("dlu_ext").setIndex("expr", "dl.u", 0);
+    model.result.export("dlu_ext").setIndex("looplevelinput", "manual", 0);
+    model.result.export("dlu_ext").setIndex("looplevel", timeIdx, 0);
+    model.result.export("dlv_ext").set("exporttype", "text");
+    model.result.export("dlu_ext").set("exporttype", "text");
+    fnamev = sprintf("%s\\dlv\\dlv_%d.txt", baseDir,timeIdx);
+    fnameu = sprintf("%s\\dlu\\dlu_%d.txt", baseDir,timeIdx);
+    model.result.export("dlv_ext").set("filename", fnamev);
+    model.result.export("dlu_ext").set("filename", fnameu);
+    model.result.export("dlv_ext").run();
+    model.result.export("dlu_ext").run();
+end
+    
 """
 import pandas as pd
 import numpy as np
