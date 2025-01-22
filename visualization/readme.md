@@ -1,5 +1,6 @@
 # Converting COMSOL Flux Output to TecPlot360-Compatible Format
-This Python script converts model output files containing horizontal (`dl.u`) and vertical (`dl.v`) flux data into a TecPlot360-compatible format for visualization.
+This Python script converts model output files containing horizontal (`dl.u`) and vertical (`dl.v`) flux data into a TecPlot360-compatible format for visualization. Who does not love TecPlot?
+
 ## Workflow
 
 | **Step**                | **Description** |
